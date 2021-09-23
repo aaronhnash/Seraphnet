@@ -32,6 +32,6 @@ class RequestHandler(socketserver.BaseRequestHandler):
                 actions.blink()
 
         else:
-            response = bytes(f"No valid command", "ascii")
+            response = bytes(f"Not a valid command!", "ascii")
 
         self.request.sendall(response) # Return an echo with capitalization

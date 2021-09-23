@@ -1,12 +1,17 @@
-import socketserver
-import threading
+import socketserver, socket, threading
 from RequestHandler import RequestHandler
 
 if __name__=="__main__":
     # Only run if this program itself is run
-    HOST, PORT = "localhost", 9999
 
     print("Initializing server...")
+    hostname = socket.gethostname()
+
+    HOST = socket.gethostbyname(hostname)
+    #HOST = 'localhost'
+    PORT = 9999
+
+    print(f"'{hostname}' starting server at: {HOST}:{PORT}")
     with socketserver.TCPServer((HOST, PORT), RequestHandler) as server:
         # Run until interrupted
         print("Threading...")

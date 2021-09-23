@@ -1,4 +1,6 @@
 import socketserver
+import threading
+
 
 class RequestHandler(socketserver.BaseRequestHandler):
 
@@ -6,10 +8,13 @@ class RequestHandler(socketserver.BaseRequestHandler):
         """The functions and responses that should be taken when the server is run."""
         # How does it respond?
         self.data = self.request.recv(1024).strip() # This is where the incoming data is stored
-        print("{} Says: ".format(self.client_address[0]))
+
+        # Thread the responses in case multiple processes will need to be run 
+        cur_thread = threading.current_thread()
+        
+        print(f"{cur_thread.name}: {self.client_address} Says:")
         print(self.data)
 
-        self.request.sendall(f"Echoing {self.data.upper()}") # Return an echo with capitalization
+        response = self.data.upper()
 
-        
-
+        self.request.sendall(response) # Return an echo with capitalization

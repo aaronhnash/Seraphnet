@@ -3,6 +3,11 @@ import sys
 
 
 def client(HOST, PORT, message):
+
+    #TODO: Add exception handling:
+    # If no server is found:
+    # ConnectionRefusedError: [Errno 61] Connection refused
+    
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect((HOST, PORT))
         sock.sendall(bytes(message, 'ascii'))

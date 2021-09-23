@@ -11,10 +11,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
         # How does it respond?
         self.data = str(self.request.recv(1024), "ascii").strip() # This is where the incoming data is stored
 
-
         command = self.data.split(" ", 1)
-
-        # Formats into something more usable--turns (b'first test') to ['first', 'test']
         if len(command) == 1: # Add a blank command if there's nothing there
             command.append(None)
         

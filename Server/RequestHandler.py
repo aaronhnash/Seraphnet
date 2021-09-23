@@ -1,8 +1,6 @@
 import socketserver, threading
 from typing import Type
-from FunctionHandler import FunctionHandler
-
-actions = FunctionHandler()
+#import GPIO
 
 class RequestHandler(socketserver.BaseRequestHandler):
 
@@ -27,11 +25,49 @@ class RequestHandler(socketserver.BaseRequestHandler):
 
         elif command[0] == "blink":
             try:
-                actions.blink(command[1])
-            except TypeError: # If the modifier is None or a string that can't be changed into an int, then it won't work. 
-                actions.blink()
+                self.blink(int(command[1]))
+                n = command[1]
+            except: # If there's an error, then run as default.
+                self.blink()
+                n = 1
+            response = bytes(f"Blinking {n} time(s)", "ascii")
+
+        elif command[0] == "rotate":
+            try:
+                self.rotate(int(command[1]))
+                n = command[1]
+            except:
+                self.rotate()
+                n = 0
+            response = bytes(f"Rotating {n} degrees", "ascii")
+
+        elif command[0] == "help":
+            if command[1] == "echo":
+                response = bytes("Usage: echo (message); returns message to client", "ascii")
+            elif command[1] == "blink":
+                response = bytes("Usage: blink (integer); blinks LED n times. Default 1.", "ascii")
+            elif command[1] == "rotate":
+                response = bytes("Usage: rotate (integer); rotates servo n degrees. Default 0, range (-90, 90).", "ascii")
+            else:
+                response = bytes("Usage: help (command); available commands: echo, blink, rotate, help", "ascii")
 
         else:
-            response = bytes(f"Not a valid command!", "ascii")
+            response = bytes(f"Invalid command! Type help for help.", "ascii")
 
         self.request.sendall(response) # Return an echo with capitalization
+
+
+    #TODO: Write functions below
+
+    def blink(self, count=1):
+        """Turns an external LED on and off n times. Default 1."""
+        #TODO: Get GPIO mapping and see which pin the LED is attached to. 
+
+        pass
+
+    def rotate(self, deg=0):
+        """Rotates an attached servo to a specified angle. Min -90, max 90."""
+        #TODO: Get GPIO mapping of servo.
+        #TODO: Should the default action just spin for a little bit, and then go the other way?
+
+        pass

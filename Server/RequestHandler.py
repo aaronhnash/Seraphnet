@@ -9,9 +9,11 @@ class RequestHandler(socketserver.BaseRequestHandler):
     def handle(self) -> None:
         """The functions and responses that should be taken when the server is run."""
         # How does it respond?
-        self.data = self.request.recv(1024).strip() # This is where the incoming data is stored
+        self.data = str(self.request.recv(1024), "ascii").strip() # This is where the incoming data is stored
 
-        command = ((str(self.data)).replace("'","")[1:]).split(" ", 1)
+
+        command = self.data.split(" ", 1)
+
         # Formats into something more usable--turns (b'first test') to ['first', 'test']
         if len(command) == 1: # Add a blank command if there's nothing there
             command.append(None)
@@ -21,7 +23,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
         # Thread the responses in case multiple processes will need to be run 
         cur_thread = threading.current_thread()
         
-        print(f"{cur_thread.name}: {self.client_address} Says: {print(self.data)}")
+        print(f"{cur_thread.name}: {self.client_address} Says: {self.data}")
 
         if command[0] == "echo":
             response = bytes(f"Echoing '{command[1]}'", "ascii")

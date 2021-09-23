@@ -21,8 +21,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
         # Thread the responses in case multiple processes will need to be run 
         cur_thread = threading.current_thread()
         
-        print(f"{cur_thread.name}: {self.client_address} Says:")
-        print(self.data)
+        print(f"{cur_thread.name}: {self.client_address} Says: {print(self.data)}")
 
         if command[0] == "echo":
             response = bytes(f"Echoing '{command[1]}'", "ascii")

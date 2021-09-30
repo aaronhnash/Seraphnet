@@ -6,13 +6,17 @@ if __name__=="__main__":
 
     print("Initializing server...")
     hostname = socket.gethostname()
-
-    HOST = socket.gethostbyname(hostname)
+    #HOST = "10.46.13.201"
+    #HOST = socket.gethostbyname(hostname)
     #HOST = 'localhost'
+    HOST = "10.244.133.138"
     PORT = 9999
 
+    class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+        pass
+
     print(f"'{hostname}' starting server at: {HOST}:{PORT}")
-    with socketserver.TCPServer((HOST, PORT), RequestHandler) as server:
+    with ThreadedTCPServer((HOST, PORT), RequestHandler) as server:
         # Run until interrupted
         print("Threading...")
         # Thread when first started, will start one more thread for each request receieved
@@ -22,6 +26,7 @@ if __name__=="__main__":
         server_thread.daemon = True 
 
         print(f"Server loop running in thread: {server_thread.name}")
+        server_thread.start()
         server_thread.run()
 
 

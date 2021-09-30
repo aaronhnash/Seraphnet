@@ -9,6 +9,7 @@ if __name__=="__main__":
     #HOST = "10.46.13.201"
     #HOST = socket.gethostbyname(hostname)
     #HOST = 'localhost'
+    #HOST = "172.20.10.2"
     HOST = "10.244.133.138"
     PORT = 9999
 
@@ -26,7 +27,6 @@ if __name__=="__main__":
         server_thread.daemon = True 
 
         print(f"Server loop running in thread: {server_thread.name}")
-        server_thread.start()
         server_thread.run()
 
 

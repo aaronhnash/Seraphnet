@@ -31,6 +31,10 @@ Welcome to my first step in networking with embedded systems! In this project, m
 {Make a list of websites that you found helpful in this project}
 * [Web Site Name](http://url.link.goes.here)
 * [Web Site Name](http://url.link.goes.here)
+https://stackoverflow.com/questions/67539425/how-can-i-connect-two-computers-with-python-socket
+https://www.learnrobotics.org/blog/raspberry-pi-servo-motor/
+https://pinout.xyz/#
+https://thepihut.com/blogs/raspberry-pi-tutorials/27968772-turning-on-an-led-with-your-raspberry-pis-gpio-pins
 
 # Future Work
 

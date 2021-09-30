@@ -41,6 +41,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
 
         if command[0] == "echo":
             response = bytes(f"Echoing '{command[1]}'", "ascii")
+            self.request.sendall(response)
 
         elif command[0] == "blink":
 
@@ -49,6 +50,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
             else:
                 n = command[1]
             response = bytes(f"Blinking {n} time(s)", "ascii")
+            self.request.sendall(response)
 
             try:
                 self.blink(int(command[1]))
@@ -62,6 +64,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
             else:
                 n = command[1]
             response = bytes(f"Rotating to {n} degrees", "ascii")
+            self.request.sendall(response)
 
             try:
                 self.rotate(int(command[1]))
@@ -77,11 +80,10 @@ class RequestHandler(socketserver.BaseRequestHandler):
                 response = bytes("Usage: rotate (integer); rotates servo to n degrees. Default 0, range (-90, 90).", "ascii")
             else:
                 response = bytes("Usage: help (command); available commands: echo, blink, rotate, help", "ascii")
-
+            self.request.sendall(response)
         else:
             response = bytes(f"Invalid command! Type help for help.", "ascii")
-
-        self.request.sendall(response) # Return an echo with capitalization
+            self.request.sendall(response)
 
 
     #TODO: Write functions below

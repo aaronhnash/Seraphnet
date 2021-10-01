@@ -10,7 +10,7 @@ if __name__=="__main__":
     #HOST = socket.gethostbyname(hostname)
     #HOST = 'localhost'
     #HOST = "172.20.10.2"
-    HOST = "10.244.133.138"
+    HOST = "172.20.10.6"
     PORT = 9999
 
     class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):

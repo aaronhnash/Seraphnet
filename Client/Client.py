@@ -8,10 +8,15 @@ def client(HOST, PORT, message):
     # If no server is found:
     # ConnectionRefusedError: [Errno 61] Connection refused
     
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.connect((HOST, PORT))
-        sock.sendall(bytes(message, 'ascii'))
-        response = str(sock.recv(1024), 'ascii')
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.connect((HOST, PORT))
+            sock.sendall(bytes(message, 'ascii'))
+            response = str(sock.recv(1024), 'ascii')
 
-        print("Sent:     {}".format(message))
-        print("Received: {}".format(response))
+            print("Sent:     {}".format(message))
+            print("Received: {}".format(response))
+
+    except Exception as e:
+        print(f"Unable to establish connection with {HOST}:{PORT}: {e}")
+        exit()

@@ -1,25 +1,17 @@
 import socketserver, threading, time
 from typing import Type
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
-#GPIO.setmode(BCM)
+GPIO.setmode(GPIO.BCM)
 # GPIO pin mapping & setup
 pinLED = 18
 pinServo = 17
 
-#GPIO.setup(pinLED, GPIO.OUT)
-#GPIO.setup(pinServo, GPIO.OUT)
+GPIO.setup(pinLED, GPIO.OUT)
+GPIO.setup(pinServo, GPIO.OUT)
 
-#servo = GPIO.PWM(pinServo, 50)
-#servo.start(0)
-
-# Some pre-defined duty cycles, will add as the session goes on to speed up caclulations.
-duty_cycle = {
-    0:[1.5, 7.5],
-    90:[2, 10],
-    -90:[1, 5] 
-}
-
+servo = GPIO.PWM(pinServo, 50)
+servo.start(0)
 
 class RequestHandler(socketserver.BaseRequestHandler):
 
@@ -69,6 +61,7 @@ class RequestHandler(socketserver.BaseRequestHandler):
             try:
                 self.rotate(int(command[1]))
             except:
+                print("Defauling to 0")
                 self.rotate()
 
         elif command[0] == "help":
@@ -93,23 +86,18 @@ class RequestHandler(socketserver.BaseRequestHandler):
         #TODO: Get GPIO mapping and see which pin the LED is attached to. 
         for n in range(count):
             print(f"Blink {n+1}...")
-            # GPIO.output(pinLED, HIGH)
+            GPIO.output(pinLED, GPIO.HIGH)
             time.sleep(0.3)
-            #GPIO.output(pinLED, LOW)
+            GPIO.output(pinLED, GPIO.LOW)
             time.sleep(0.3)
 
     def rotate(self, deg=0):
         """Rotates an attached servo to a specified angle. Min -90, max 90."""
         #TODO: Uncomment when connected to the RPi
 
-        if deg in duty_cycle:
-            # servo.ChangeDutyCycle(duty_cycle[deg][1])
-            pass
-        else:
-            # calculate, add to dictionary, and then set the angle.
-            ms = deg*(1/180) + 1.5 # formula for calculating the first part of the duty cycle
-            cycle = ms/20 # converting from ms to percentage
-            duty_cycle[deg] = [ms, cycle]
-            # servo.ChangeDutyCycle(duty_cycle[deg][1])
-
+        # Formula for calculating duty percentage
+        cycle = deg*(5/90)+7.5
+        servo.ChangeDutyCycle(cycle)
+        time.sleep(0.4)
+        servo.ChangeDutyCycle(0)
 

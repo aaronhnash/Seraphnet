@@ -1,12 +1,8 @@
 from Client import client
 
-
-# 10.244.133.138 (school mac)
 HOST= "172.20.10.6"
 PORT = 9999
-#HOST = 'localhost'
-# 10.46.13.201 (pi)
-#10.46.13.204 (mac)
+
 
 if __name__ == "__main__":
     print("Initializing client...")

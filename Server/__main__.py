@@ -6,10 +6,7 @@ if __name__=="__main__":
 
     print("Initializing server...")
     hostname = socket.gethostname()
-    #HOST = "10.46.13.201"
-    #HOST = socket.gethostbyname(hostname)
-    #HOST = 'localhost'
-    #HOST = "172.20.10.2"
+
     HOST = "172.20.10.6"
     PORT = 9999
 
@@ -28,9 +25,3 @@ if __name__=="__main__":
 
         print(f"Server loop running in thread: {server_thread.name}")
         server_thread.run()
-
-
-
-# Note about what I've learned:
-# This code currently works for local servers. It supports multi-threading, but at the moment I have no need for more than one thread.
-# I decided to leave it in in case it would be useful for later modifications.

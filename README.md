@@ -1,44 +1,61 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.  Talk about what you are trying to accomplish as a software engineer to further your learning.}
+Welcome to my first step in networking with embedded systems! In this project, I will be connecting a laptop 'client' with an offboard Raspberry Pi 'server'. This project is my first step into learning about networking, a subject I've run into numerous times while trying to work with my Raspberry Pi. 
 
-Welcome to my first step in networking with embedded systems! In this project, my goal is to establish a connection between a host Raspberry Pi with a client laptop. [What else am I trying to accomplish?]
+This project comes as a set, with both a `Client` and a `Server` file. While each file is available in the same repository, each program should be run on the target computer. For example:
+```python
+python3 Server
+```
+should first be run on the target `Server` computer, and 
+```python
+python3 Client
+```
+should next be run on the target `Client` computer. No input is needed after running `Server`. `Client` offers built-in help for using each of the commands, which are listed below:
 
-{Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
+1. echo {argument}
+    * Takes the supplied argument and responds, returning the argument to the client.
+2. blink {n}
+    * Blinks an LED n number of times, default 1.
+3. rotate {n}
+    * Rotates a servo to n degrees, from -90 to 90. 
+4. help {command}
+    * Provides information for any listed command
 
-{Describe your purpose for writing this software.}
 
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
+I've been wanting to learn about remotely controlling my Raspberry Pi, in the hopes of building something more hardware intensive down the line. This project gave me the perfect opportunity to learn about networking
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/vZmuBncDaVg)
 
 # Network Communication
 
-{Describe the architecture that you used (client/server or peer-to-peer)}
+This program utilizes the server/client architecture, given a threaded server that's capable of handling multiple requests simultaneously from one or more connected clients, though given the low amount of current available functions, more than one simultaneous client is not recommended. 
 
-{Identify if you are using TCP or UDP and what port numbers are used.}
+I used a TCP-based server for this project, in order to ensure efficient communication between the server and the client. By default this program uses the server's port 9999, but this can be changed as needed.
 
-{Identify the format of messages being sent between the client and server or the messages sent between two peers.}
+The messages sent between the server and the client are sent in bytes, and then interpreted according to the command received. 
 
 # Development Environment
 
 {Describe the tools that you used to develop the software}
 
-{Describe the programming language that you used and any libraries.}
+This was developed using `VisualStudioCode`, `Git`, & `Github`, and is meant to be hosted on a `Raspberry Pi`.
+
+This project was written in **Python**, libraries used are `socket`, `socketserver`, `threading` and `RPi.GPIO`, included in default installation of `Raspberry Pi OS`. 
 
 # Useful Websites
 
 {Make a list of websites that you found helpful in this project}
+* [Stack Overflow - Connecting Separate Computers using Socket](https://stackoverflow.com/questions/67539425/how-can-i-connect-two-computers-with-python-socket)
+* [Learn Robotics - Controlling a Servo using Duty Cycles](https://www.learnrobotics.org/blog/raspberry-pi-servo-motor/)
+* [The Pi Hut - Controlling an LED](https://thepihut.com/blogs/raspberry-pi-tutorials/27968772-turning-on-an-led-with-your-raspberry-pis-gpio-pins)
+* [Python Docs - SocketServer documentation](https://docs.python.org/3.6/library/socketserver.html)
+* [Python Docs - Socket documentation](https://docs.python.org/3.6/library/socket.html)
 * [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
-https://stackoverflow.com/questions/67539425/how-can-i-connect-two-computers-with-python-socket
-https://www.learnrobotics.org/blog/raspberry-pi-servo-motor/
-https://pinout.xyz/#
-https://thepihut.com/blogs/raspberry-pi-tutorials/27968772-turning-on-an-led-with-your-raspberry-pis-gpio-pins
+
 
 # Future Work
 
 {Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* Expanded functionality -- More onboard functions for RPi.
+* Remote access -- Ability for Server/Client to be hosted on separate networks
+* Client GUI
